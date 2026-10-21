@@ -1,0 +1,5 @@
+/user/.env
+/product/.env
+/order/.env
+/payment/.env
+/api_gateway/.env

@@ -1,0 +1,13 @@
+CREATE TABLE orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    invoice_number VARCHAR(255) NOT NULL,
+    transaction_date TIMESTAMP NOT NULL,
+    total_amount DECIMAL(12,2) NOT NULL,
+    tax DECIMAL(12,2) NOT NULL,
+    discount DECIMAL (2,2) NOT NULL,
+    grand_total DECIMAL (12,2) NOT NULL,
+    payment_status ENUM('PENDING', 'PAID', 'CANCELLED', 'FAILED') NOT NULL,
+    order_status ENUM('PAID', 'ONGOING','COMPLETED', 'CANCELLED') NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
