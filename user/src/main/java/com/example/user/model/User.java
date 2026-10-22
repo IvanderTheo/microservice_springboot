@@ -4,16 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@Getter // Otomatis membuat getter untuk semua atribut
-@Setter // Otomatis membuat setter untuk semua atribut
-@NoArgsConstructor // Otomatis membuat constructor kosong (wajib untuk JPA)
-@AllArgsConstructor // Otomatis membuat constructor dengan semua parameter
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 
     @Id
