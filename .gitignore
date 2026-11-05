@@ -3,3 +3,5 @@
 /order/.env
 /payment/.env
 /api_gateway/.env
+/uploads/products/
+/product/uploads/products/

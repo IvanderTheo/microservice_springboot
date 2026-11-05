@@ -49,8 +49,13 @@ public class JwtSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v2/products/**", "/product-images/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/openapi/**")
                         .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v2/products/**").hasRole("GUEST")
+                        .requestMatchers(HttpMethod.PUT, "/api/v2/products/**").hasRole("GUEST")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v2/products/**").hasRole("GUEST")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v2/products/**").hasRole("GUEST")
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/products/**").hasRole("GUEST")
                         .requestMatchers(HttpMethod.POST, "/api/v1/products/**").hasRole("GUEST")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/products/**").hasRole("GUEST")

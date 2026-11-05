@@ -3,6 +3,8 @@ package com.example.product.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,6 +43,10 @@ public class Product {
 
     @Column(nullable = false)
     private int stock;
+
+    @JsonIgnore
+    @Column(name = "image_path")
+    private String imagePath;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

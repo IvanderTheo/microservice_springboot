@@ -45,3 +45,24 @@ Gateway berjalan pada port `8080`; user, product, order, dan payment masing-masi
    Jumlah pembayaran dihitung dari grand total order (bukan input klien). Setelah berhasil, status pembayaran dan order berubah menjadi `PAID`. Pembayaran dan riwayat order hanya dapat dibaca oleh pemiliknya.
 
 Akun baru memiliki role `GUEST`. Operasi administrasi user dan perubahan master product memerlukan role `ADMIN`; operator dapat memberikan role tersebut melalui database user service untuk akun administrator yang dikelola.
+
+## Product API v2
+
+Product Service v2 tersedia di `GET`, `POST`, `PUT`, `PATCH`, dan `DELETE /api/v2/products` (operasi berdasarkan ID menggunakan `/api/v2/products/{id}`). V1 tetap berada di `/api/v1/products` dan tidak menyertakan properti gambar.
+
+V2 menerima `multipart/form-data` dengan field `name`, `description`, `category`, `price`, `stock`, dan part `image` opsional berisi file JPEG, PNG, WebP, atau GIF (maksimal 5 MB). `POST` dan `PUT` memerlukan seluruh field product; `PATCH` hanya perlu mengirim field yang ingin diubah. Jika gambar tidak dikirim saat update, gambar lama tetap dipertahankan.
+
+Contoh pembuatan product dengan gambar melalui gateway:
+
+```sh
+curl -X POST http://localhost:8080/api/v2/products \
+  -H "Authorization: Bearer <accessToken>" \
+  -F "name=Produk" \
+  -F "description=Deskripsi" \
+  -F "category=Kategori" \
+  -F "price=10000" \
+  -F "stock=5" \
+  -F "image=@produk.jpg;type=image/jpeg"
+```
+
+Respons v2 menyertakan `imagePath` seperti `/product-images/<nama-file>.jpg`; file dapat diakses melalui path tersebut. Penyimpanan default berada di `uploads/products` relatif terhadap working directory Product Service dan dapat diubah dengan `PRODUCT_IMAGE_STORAGE_DIR` pada `product/.env`.
