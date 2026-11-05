@@ -1,7 +1,8 @@
 package com.example.order.enums;
 
 public enum PaymentStatus {
-    Pending,
-    Paid,
-    Cancelled
+    PENDING,
+    PAID,
+    CANCELLED,
+    FAILED
 }

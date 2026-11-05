@@ -3,7 +3,10 @@ package com.example.order.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.example.order.enums.OrderStatus;
 import com.example.order.enums.PaymentStatus;
 
@@ -17,6 +20,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +39,9 @@ public class Order {
 
     @Column(name = "invoice_number",nullable = false)
     private String invoiceNumber;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "transaction_date",nullable = false)
     private LocalDateTime transactionDate;
@@ -62,6 +71,10 @@ public class Order {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<OrderItem> items = new ArrayList<>();
 
     public void setTransactionDate(LocalDateTime transactionDate) {
         if (transactionDate == null) {

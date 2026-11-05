@@ -1,0 +1,1 @@
+saya kena masalah cors ketika mencoba testing menggunakan api gateway. ketika saya coba satu satu aman.

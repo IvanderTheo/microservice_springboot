@@ -3,8 +3,6 @@ package com.example.payment.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import org.springframework.cglib.core.Local;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +24,12 @@ public class Payment {
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY) 
     private Long id;
+
+    @Column(name = "order_id", unique = true)
+    private Long orderId;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(nullable = true)
     private String notes;
@@ -50,10 +54,10 @@ public class Payment {
             throw new IllegalArgumentException("Paid Amount cannot be null");
         }
 
-        if(paidAmount.compareTo(BigDecimal.ZERO) > 0) {
+        if(paidAmount.compareTo(BigDecimal.ZERO) >= 0) {
             this.paidAmount = paidAmount;
         } else {
-            throw new IllegalArgumentException("Paid Amount must greater than 0");
+            throw new IllegalArgumentException("Paid Amount must be greater than or equal to 0");
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.user.controller;
 
 import com.example.user.dto.CreateUserRequest;
+import com.example.user.dto.LoginResponse;
 import com.example.user.dto.LoginUserRequest;
+import com.example.user.dto.UserResponse;
 import com.example.user.model.User;
 import com.example.user.service.UserService;
 
@@ -23,31 +25,31 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> index() {
+    public List<UserResponse> index() {
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public User show(@PathVariable Long id) {
+    public UserResponse show(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     //register
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User register(@Valid @RequestBody CreateUserRequest request) {
+    public UserResponse register(@Valid @RequestBody CreateUserRequest request) {
         return userService.register(request);
     }
 
     //login
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public User login(@Valid @RequestBody LoginUserRequest request) {
+    public LoginResponse login(@Valid @RequestBody LoginUserRequest request) {
         return userService.login(request);
     }
     
     @PutMapping("/{id}")
-    public User update(
+    public UserResponse update(
             @PathVariable Long id,
             @Valid @RequestBody User user
     ) {
