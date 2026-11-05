@@ -48,6 +48,11 @@ public class PaymentService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment not found"));
     }
 
+    public void delete(Long id, Long userId) {
+        Payment payment = findById(id, userId);
+        paymentRepository.delete(payment);
+    }
+
     @Transactional
     public Payment create(CreatePaymentRequest request, Long userId, String accessToken) {
         OrderDetails order = findOrder(request.orderId(), accessToken);
@@ -60,12 +65,15 @@ public class PaymentService {
         if (paymentRepository.existsByOrderId(order.id())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Order already has a payment");
         }
+        if (request.paidAmount().compareTo(order.grandTotal()) < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "saldo kurang");
+        }
 
         Payment payment = new Payment();
         payment.setOrderId(order.id());
         payment.setUserId(userId);
         payment.setNotes(request.notes());
-        payment.setPaidAmount(order.grandTotal());
+        payment.setPaidAmount(request.paidAmount());
         payment.setPaymentDate(LocalDateTime.now());
         payment.setPaymentMethod(request.paymentMethod());
 

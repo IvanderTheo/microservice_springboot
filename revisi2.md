@@ -1,0 +1,1 @@
+lakukan perbaikan pada create payment service sehingga paidamount masuk dari request. lakukan validasi jika paid amount kurang dari grand total order service maka berikan message "saldo kurang"

@@ -51,9 +51,10 @@ public class JwtSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/openapi/**")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/products/**").hasRole("GUEST")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/products/**").hasRole("GUEST")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/products/**").hasRole("GUEST")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**").hasRole("GUEST")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));

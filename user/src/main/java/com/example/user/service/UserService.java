@@ -3,6 +3,7 @@ package com.example.user.service;
 import com.example.user.dto.CreateUserRequest;
 import com.example.user.dto.LoginResponse;
 import com.example.user.dto.LoginUserRequest;
+import com.example.user.dto.UpdateUserRequest;
 import com.example.user.dto.UserResponse;
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
@@ -91,6 +92,22 @@ public class UserService {
         user.setEmail(data.getEmail());
         if (data.getPassword() != null && !data.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(data.getPassword()));
+        }
+
+        return toResponse(userRepository.save(user));
+    }
+
+    public UserResponse patch(Long id, UpdateUserRequest request) {
+        User user = findEntityById(id);
+
+        if (request.name() != null && !request.name().isBlank()) {
+            user.setName(request.name());
+        }
+        if (request.email() != null && !request.email().isBlank()) {
+            if (userRepository.existsByEmail(request.email()) && !request.email().equalsIgnoreCase(user.getEmail())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already registered");
+            }
+            user.setEmail(request.email());
         }
 
         return toResponse(userRepository.save(user));

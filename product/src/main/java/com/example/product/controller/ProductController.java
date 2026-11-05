@@ -1,6 +1,8 @@
 package com.example.product.controller;
 
 import com.example.product.dto.CreateProductRequest;
+import com.example.product.dto.UpdateProductRequest;
+import com.example.product.dto.UpdateProductStockRequest;
 import com.example.product.model.Product;
 import com.example.product.service.ProductService;
 
@@ -31,6 +33,16 @@ public class ProductController {
         return productService.findById(id);
     }
 
+    @PatchMapping("/{id}")
+    public Product patch(@PathVariable Long id, @RequestBody UpdateProductRequest request) {
+        return productService.patch(id, request);
+    }
+
+    @PatchMapping("/{id}/stock")
+    public Product reduceStock(@PathVariable Long id, @Valid @RequestBody UpdateProductStockRequest request) {
+        return productService.adjustStock(id, request.quantity());
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Product store(@Valid @RequestBody CreateProductRequest request) {
@@ -46,7 +58,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void destroy(@PathVariable Long id) {
         productService.delete(id);
     }

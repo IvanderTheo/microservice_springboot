@@ -1,1 +1,3 @@
-saya kena masalah cors ketika mencoba testing menggunakan api gateway. ketika saya coba satu satu aman.
+saya kena masalah cors ketika mencoba testing menggunakan api gateway. ketika saya coba satu-satu service aman sesuai port masing-masing tetapi ketika coba swagger dari apigateway kena cors. 
+
+sekarang pastikan payment service hanya menampilkan order service dengan payment_status pending, ketika melakukan payment maka mengubah payment_status pending menjadi paid dan mengurangi quantity di product service.
